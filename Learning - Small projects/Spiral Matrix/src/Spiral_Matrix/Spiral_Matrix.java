@@ -10,6 +10,7 @@ public class Spiral_Matrix {
 		// Users input decides amount of rows and columns
 		int row = Integer.parseInt(JOptionPane.showInputDialog("Select the amount of rows:"));
 		int column = Integer.parseInt(JOptionPane.showInputDialog("Select the amount of columns:"));
+		String start = JOptionPane.showInputDialog("Start from: BL, BR, TL, TR?");
 
 		// current value in array
 		int current = 1;
@@ -24,41 +25,144 @@ public class Spiral_Matrix {
 
 		// it will loop as long as current number doesn't reach its mark (rows*columns)
 		while (current <= row * column) {
-
-			// looping from bottom right to bottom left
-			for (int i = maxColumn; i >= minColumn; i--) {
-				matrix[maxRow][i] = current++;
+			if (start.equals("BR") || start.equals("br")) {
+				// looping from bottom right to bottom left
+				for (int i = maxColumn; i >= minColumn; i--) {
+					matrix[maxRow][i] = current++;
+				}
+				// going up
+				maxRow--;
+				if (current > row * column)
+					break;
+				// looping from bottom left to top left
+				for (int n = maxRow; n >= minRow; n--) {
+					matrix[n][minColumn] = current++;
+				}
+				// going right
+				minColumn++;
+				if (current > row * column)
+					break;
+				// looping from top left to top right
+				for (int i = minColumn; i <= maxColumn; i++) {
+					matrix[minRow][i] = current++;
+				}
+				// going down
+				minRow++;
+				if (current > row * column)
+					break;
+				// looping from top right to bottom right
+				for (int n = minRow; n <= maxRow; n++) {
+					matrix[n][maxColumn] = current++;
+				}
+				// going left
+				maxColumn--;
+				if (current > row * column)
+					break;
 			}
-			// going up
-			maxRow--;
-			if (current > row * column)
-				break;
-			// looping from bottom left to top left
-			for (int n = maxRow; n >= minRow; n--) {
-				matrix[n][minColumn] = current++;
+			else if(start.equals("BL") || start.equals("bl")) {
+				
+				//looping from bottom left to top left
+				for (int n = maxRow; n >= minRow; n--) {
+					matrix[n][minColumn] = current++;
+				}
+				// going right
+				minColumn++;
+				if (current > row * column)
+					break;
+				// looping from top left to top right
+				for (int i = minColumn; i <= maxColumn; i++) {
+					matrix[minRow][i] = current++;
+				}
+				// going down
+				minRow++;
+				if (current > row * column)
+					break;
+				// looping from top right to bottom right
+				for (int n = minRow; n <= maxRow; n++) {
+					matrix[n][maxColumn] = current++;
+				}
+				// going left
+				maxColumn--;
+				if (current > row * column)
+					break;
+				// looping from bottom right to bottom left
+				for (int i = maxColumn; i >= minColumn; i--) {
+					matrix[maxRow][i] = current++;
+				}
+				// going up
+				maxRow--;
+				if (current > row * column)
+					break;
 			}
-			// going right
-			minColumn++;
-			if (current > row * column)
-				break;
-			// looping from top left to top right
-			for (int i = minColumn; i <= maxColumn; i++) {
-				matrix[minRow][i] = current++;
+			else if(start.equals("TL") || start.equals("tl")) {
+				// looping from top left to top right
+				for (int i = minColumn; i <= maxColumn; i++) {
+					matrix[minRow][i] = current++;
+				}
+				// going down
+				minRow++;
+				if (current > row * column)
+					break;
+				// looping from top right to bottom right
+				for (int n = minRow; n <= maxRow; n++) {
+					matrix[n][maxColumn] = current++;
+				}
+				// going left
+				maxColumn--;
+				if (current > row * column)
+					break;
+				// looping from bottom right to bottom left
+				for (int i = maxColumn; i >= minColumn; i--) {
+					matrix[maxRow][i] = current++;
+				}
+				// going up
+				maxRow--;
+				if (current > row * column)
+					break;
+				//looping from bottom left to top left
+				for (int n = maxRow; n >= minRow; n--) {
+					matrix[n][minColumn] = current++;
+				}
+				// going right
+				minColumn++;
+				if (current > row * column)
+					break;
 			}
-			// going down
-			minRow++;
-			if (current > row * column)
-				break;
-			// looping from top right to bottom right
-			for (int n = minRow; n <= maxRow; n++) {
-				matrix[n][maxColumn] = current++;
+			else if(start.equals("TR") || start.equals("tr")) {
+				// looping from top right to bottom right
+				for (int n = minRow; n <= maxRow; n++) {
+					matrix[n][maxColumn] = current++;
+				}
+				// going left
+				maxColumn--;
+				if (current > row * column)
+					break;
+				// looping from bottom right to bottom left
+				for (int i = maxColumn; i >= minColumn; i--) {
+					matrix[maxRow][i] = current++;
+				}
+				// going up
+				maxRow--;
+				if (current > row * column)
+					break;
+				//looping from bottom left to top left
+				for (int n = maxRow; n >= minRow; n--) {
+					matrix[n][minColumn] = current++;
+				}
+				// going right
+				minColumn++;
+				if (current > row * column)
+					break;
+				// looping from top left to top right
+				for (int i = minColumn; i <= maxColumn; i++) {
+					matrix[minRow][i] = current++;
+				}
+				// going down
+				minRow++;
+				if (current > row * column)
+					break;
 			}
-			// going left
-			maxColumn--;
-			if (current > row * column)
-				break;
 		}
-
 		// printing the matrix
 		for (int i = 0; i < row; i++) {
 			System.out.println(Arrays.toString(matrix[i]));
