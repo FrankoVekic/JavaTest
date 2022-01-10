@@ -60,7 +60,9 @@ public class Spiral_Matrix {
 				maxColumn--;
 				if (current > row * column)
 					break;
-			} else if (start.equals("BL") || start.equals("bl")) {
+			}
+			
+			else if (start.equals("BL") || start.equals("bl")) {
 
 				// looping from bottom left to top left
 				for (int n = maxRow; n >= minRow; n--) {
@@ -94,7 +96,9 @@ public class Spiral_Matrix {
 				maxRow--;
 				if (current > row * column)
 					break;
-			} else if (start.equals("TL") || start.equals("tl")) {
+			} 
+			
+			else if (start.equals("TL") || start.equals("tl")) {
 				// looping from top left to top right
 				for (int i = minColumn; i <= maxColumn; i++) {
 					matrix[minRow][i] = current++;
@@ -127,7 +131,10 @@ public class Spiral_Matrix {
 				minColumn++;
 				if (current > row * column)
 					break;
-			} else if (start.equals("TR") || start.equals("tr")) {
+				
+			}
+			
+			else if (start.equals("TR") || start.equals("tr")) {
 				// looping from top right to bottom right
 				for (int n = minRow; n <= maxRow; n++) {
 					matrix[n][maxColumn] = current++;
@@ -152,7 +159,17 @@ public class Spiral_Matrix {
 				minColumn++;
 				if (current > row * column)
 					break;
-			} else if (start.equals("mid") || start.equals("MID")) {
+				// looping from top left to top right
+				for (int i = minColumn; i <= maxColumn; i++) {
+					matrix[minRow][i] = current++;
+				}
+				// going down
+				minRow++;
+				if (current > row * column)
+					break;
+			}
+			
+			else if (start.equals("mid") || start.equals("MID")) {
 				// looping from bottom right to bottom left
 				for (int i = maxColumn; i >= minColumn; i--) {
 					matrix[maxRow][i] = middle--;
