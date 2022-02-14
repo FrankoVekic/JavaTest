@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model.exercise;
+package model.primary;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -25,7 +25,17 @@ public class MobilePhone implements Serializable {
     private Date buyDate;
     private boolean working;
     private String description;
+    private String note;
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    
     public String getDescription() {
         return description;
     }

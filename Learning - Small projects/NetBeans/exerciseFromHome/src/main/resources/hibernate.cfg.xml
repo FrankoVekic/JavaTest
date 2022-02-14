@@ -18,7 +18,7 @@
         <!-- JDBC connection pool settings ... using built-in test pool -->
         <property name="connection.pool_size">5</property>
         <!-- Select our SQL dialect -->
-        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="dialect">org.hibernate.dialect.MariaDBDialect</property>
         <!-- Echo the SQL to stdout -->
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
@@ -35,8 +35,17 @@
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>
         
         <!-- Ovdje ćemo navoditi mapirane klase -->
-        <mapping class="model.exercise.MobilePhone" />
-        <mapping class="model.exercise.Pencil" />
-        <mapping class="model.exercise.Pc" />
+        <mapping class="model.primary.MobilePhone" />
+        <mapping class="model.primary.Pencil" />
+        <mapping class="model.primary.Pc" />
+        
+        <mapping class="inheritance.DeliveryNote" />
+        <mapping class="inheritance.Receipt" />
+        
+        <mapping class="connections.Municipality" />
+        <mapping class="connections.Place" />
+        <mapping class="connections.Label" />
+        <mapping class="connections.Picture" />
+        
     </session-factory>
 </hibernate-configuration>
