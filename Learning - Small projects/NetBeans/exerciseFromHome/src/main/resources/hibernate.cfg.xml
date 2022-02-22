@@ -48,18 +48,20 @@
         <mapping class="connections.Picture" />
         -->
         
-       <!--
+     
         <mapping class="model.edunova.model.Student" />
         <mapping class="model.edunova.model.Professor" />
         <mapping class="model.edunova.model.Course" />
         <mapping class="model.edunova.model.Group" />
                 
-        -->
+       
+        
+         <!--
         <mapping class="model.edunova.exercise1.Osoba" />
         <mapping class="model.edunova.exercise1.Polaznik" />
         <mapping class="model.edunova.exercise1.Predavac" />
         <mapping class="model.edunova.exercise1.Smjer" />
         <mapping class="model.edunova.exercise1.Grupa" />
-        
+          -->
     </session-factory>
 </hibernate-configuration>
