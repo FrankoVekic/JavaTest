@@ -5,6 +5,7 @@
 package util;
 
 import com.github.javafaker.Faker;
+import controller.ProcessCourse;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -14,6 +15,9 @@ import java.util.Locale;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.edunova.model.Course;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import us.codecraft.xsoup.Xsoup;
@@ -26,6 +30,17 @@ public class Test {
     
     public static void main(String[] args) {
         
+        Course c = new Course();
+        c.setName("Setting course name");
+        c.setDuration(130);
+        ProcessCourse pc = new ProcessCourse();
+        pc.setEntity(c);
+        
+        try {
+            pc.create();
+        } catch (CatchException ex) {
+            System.out.println(ex.getMessage());
+        }
         
         
     }
