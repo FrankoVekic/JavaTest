@@ -26,6 +26,12 @@ public class Test {
     
     public static void main(String[] args) {
         
+        
+        
+    }
+    
+    private void fakerTest()
+    {
         Faker faker = new Faker();
 
         List<String> beers = new ArrayList();
@@ -54,29 +60,6 @@ public class Test {
         for(int i=0;i<200;i++){
             System.out.println(hr.name().fullName());
         }
-        
-        
-        try {
-            URL yahoo = new URL("http://oib.itcentrala.com/oib-generator/");
-            BufferedReader in = new BufferedReader(
-            new InputStreamReader(yahoo.openStream()
-            ));
-            
-            String inputLine;
-                StringBuilder sb = new StringBuilder();
-                
-                while((inputLine = in.readLine()) !=null){
-                    sb.append(inputLine);
-                }
-                
-                Document d = Jsoup.parse(sb.toString());
-                
-                System.out.println(Xsoup.compile("/html/body/div[1]/div[1]/text()").evaluate(d).get());
-            
-                in.close();
-        } catch (Exception e) {
-        }
-        
     }
     
 }
