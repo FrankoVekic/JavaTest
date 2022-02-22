@@ -25,34 +25,35 @@ public class Insert {
     public static void execute() {
 
         Session session = HibernateUtil.getSession();
-
+        session.beginTransaction();
         Faker faker = new Faker();
 
         List<Student> students = generateStudents(faker, session);
         List<Professor> professors = generateProfessors(faker, session);
         List<Course> courses = generateCourses(faker, session);
-        
+
         Course c;
         Group g;
-        
-        for(int i =0; i<courses.size()-2;i++){
+
+        for (int i = 0; i < courses.size() - 2; i++) {
             c = courses.get(i);
-            for(int j=0;j<((int) Math.random() * (5-2) +2);j++){
+            for (int j = 0; j < ((int) Math.random() * (5 - 2) + 2); j++) {
                 g = new Group();
                 g.setName(faker.animal().name());
                 g.setCourse(c);
-                g.setProfessor(professors.get((int) Math.random() * (professors.size()-1)));
-                g.setBeginningDate(new Date()); 
-                
+                g.setProfessor(professors.get((int) Math.random() * (professors.size() - 1)));
+                g.setBeginningDate(new Date());
+
                 Collections.shuffle(students);
                 g.setStudents(new ArrayList<>());
-                for(int k=0;k<((int) Math.random() * (20-10) +10);k++){
+                for (int k = 0; k < ((int) Math.random() * (20 - 10) + 10); k++) {
                     g.getStudents().add(students.get(k));
                 }
                 session.save(g);
                 System.out.println("Created group: " + g.getName());
             }
         }
+        session.getTransaction().commit();
     }
 
     private static List<Student> generateStudents(Faker faker, Session session) {
