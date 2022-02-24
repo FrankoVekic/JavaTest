@@ -4,6 +4,7 @@
  */
 package controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import model.edunova.model.Course;
 import util.CatchException;
@@ -49,6 +50,15 @@ public class ProcessCourse extends Process<Course> {
        if(entity.getDuration()==null || entity.getDuration()<0){
            throw new CatchException("Duration is required.");
        }
+    }
+    
+    private void controlPrice()throws CatchException {
+        if(entity.getPrice()==null){
+            throw new CatchException("Price is required.");
+        }
+        if(entity.getPrice().compareTo(BigDecimal.ZERO)<0 || entity.getPrice().compareTo(new BigDecimal(10000))>0){
+            throw new CatchException("Price has to be higher then 0 and 10000 ");
+        }
     }
 
 }
