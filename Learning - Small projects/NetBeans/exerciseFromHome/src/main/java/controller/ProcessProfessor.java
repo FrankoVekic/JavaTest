@@ -27,15 +27,19 @@ public class ProcessProfessor extends ProcessPerson<Professor> {
     }
 
     private void controlIban() throws CatchException {
-      if(entity.getIban()==null){
-          throw new CatchException("Iban is required.");
-      }
-      IBAN iban = IBAN.valueOf(entity.getIban());
-      if(!iban.isSEPA()){
-          throw new CatchException("Iban is invalid.");
-      }
+        if (entity.getIban() == null) {
+            throw new CatchException("Iban is required.");
+        }
+
+        try {
+            IBAN iban = IBAN.valueOf(entity.getIban());
+            if (!iban.isSEPA()) {
+                throw new CatchException("Iban is invalid.");
+            }
+        } catch (Exception e) {
+            throw new CatchException("Iban is invalid.");
+        }
+
     }
-    
-    
-    
+
 }

@@ -22,6 +22,9 @@ public class OibValidation {
 	}
 	
 	public static int checkOIBState(String oib) {
+        if(oib==null){
+            return ERR_INVALID_FORMAT;
+        }
         if (oib.length() != 11) {
             return ERR_INVALID_LENGHT;
         }

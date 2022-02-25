@@ -8,6 +8,8 @@ import java.util.List;
 import model.edunova.model.Person;
 import util.CatchException;
 import util.OibValidation;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 /**
  *
@@ -19,6 +21,7 @@ public abstract class ProcessPerson<T extends Person> extends Process<T> {
     @Override
     protected void controlCreate() throws CatchException {
         controlOib();
+        controlEmail();
     }
 
     @Override
@@ -34,6 +37,15 @@ public abstract class ProcessPerson<T extends Person> extends Process<T> {
     private void controlOib() throws CatchException {
         if(!OibValidation.checkOIB(entity.getOib())){
             throw new CatchException("Oib is invalid.");
+        }
+    }
+    
+    private void controlEmail() throws CatchException{
+         try {
+             InternetAddress emailAddr = new InternetAddress(entity.getEmail());
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            throw new CatchException("Email is invalid.");
         }
     }
     

@@ -6,11 +6,17 @@ package main;
 
 import connections.Municipality;
 import connections.Place;
+import controller.ProcessGroup;
+import controller.ProcessProfessor;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import model.edunova.model.Group;
+import model.edunova.model.Professor;
+import model.edunova.model.Student;
 import model.primary.MobilePhone;
 import org.hibernate.Session;
+import util.CatchException;
 import util.HibernateUtil;
 import util.Insert;
 
@@ -24,9 +30,35 @@ public class Start {
 
     public Start() {
         // this.session = HibernateUtil.getSession();
-         Insert.execute();
+        // Insert.execute();
         //example1();
         // readMunicipality();
+        //testingInsertProfessor();
+        
+        List<Group> groups = new ProcessGroup().read();
+        
+        for(Group g:groups){
+            System.out.println(g.getName() + " - " + g.getCourse().getName() + ": " + 
+                    g.getProfessor().getName() + " " + g.getProfessor().getSurname());
+            for(Student s: g.getStudents()){
+                System.out.println(s.getName() + " " + s.getSurname());
+                
+            }
+        }
+        
+        Professor professor = new Professor();
+        professor.setOib("59710206893");
+        professor.setName("Ana");
+        professor.setSurname("Osječka");
+        professor.setIban("HR7824020066293418958");
+        professor.setEmail("ana@osjecka");
+        ProcessProfessor pp = new ProcessProfessor();
+     //   pp.setEntity(professor);
+     //   try {
+     //      pp.create();
+     //   } catch (CatchException ce) {
+     //       System.out.println(ce.getMessage());
+     //   }
     }
 
     public static void main(String[] args) {
@@ -73,6 +105,10 @@ public class Start {
         place.setName("Bilje");
         place.setMunicipality(municipality);
         session.getTransaction().commit();
+    }
+
+    private void testingInsertProfessor() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
