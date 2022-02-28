@@ -52,6 +52,4 @@ public class Person extends model.edunova.model.Entity {
         this.email = email;
     }
     
-    
-    
 }

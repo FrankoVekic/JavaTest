@@ -19,6 +19,7 @@ import org.hibernate.Session;
 import util.CatchException;
 import util.HibernateUtil;
 import util.Insert;
+import view.SplashScreen;
 
 /**
  *
@@ -64,9 +65,9 @@ public class Start {
     public static void main(String[] args) {
         //Session s = HibernateUtil.getSession();
 
-        new Start();
+       // new Start();
 
-        Session s = HibernateUtil.getSession();
+       new SplashScreen().setVisible(true);
 
         /*
         MobilePhone m = new MobilePhone();
