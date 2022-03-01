@@ -53,6 +53,7 @@
         <mapping class="model.edunova.model.Professor" />
         <mapping class="model.edunova.model.Course" />
         <mapping class="model.edunova.model.Group" />
+        <mapping class="model.edunova.model.Operator" />
                 
        
         

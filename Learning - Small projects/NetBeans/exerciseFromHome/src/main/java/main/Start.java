@@ -35,18 +35,10 @@ public class Start {
         //example1();
         // readMunicipality();
         //testingInsertProfessor();
-        
-        List<Group> groups = new ProcessGroup().read();
-        
-        for(Group g:groups){
-            System.out.println(g.getName() + " - " + g.getCourse().getName() + ": " + 
-                    g.getProfessor().getName() + " " + g.getProfessor().getSurname());
-            for(Student s: g.getStudents()){
-                System.out.println(s.getName() + " " + s.getSurname());
-                
-            }
-        }
-        
+
+    }
+
+    private void exerciseInsertProfessor() {
         Professor professor = new Professor();
         professor.setOib("59710206893");
         professor.setName("Ana");
@@ -54,22 +46,42 @@ public class Start {
         professor.setIban("HR7824020066293418958");
         professor.setEmail("ana@osjecka");
         ProcessProfessor pp = new ProcessProfessor();
-     //   pp.setEntity(professor);
-     //   try {
-     //      pp.create();
-     //   } catch (CatchException ce) {
-     //       System.out.println(ce.getMessage());
-     //   }
+        pp.setEntity(professor);
+        try {
+            pp.create();
+        } catch (CatchException ce) {
+            System.out.println(ce.getMessage());
+        }
+    }
+
+    private void exerciseReadData() {
+
+        List<Group> groups = new ProcessGroup().read();
+
+        for (Group g : groups) {
+            System.out.println(g.getName() + " - " + g.getCourse().getName() + ": "
+                    + g.getProfessor().getName() + " " + g.getProfessor().getSurname());
+            for (Student s : g.getStudents()) {
+                System.out.println(s.getName() + " " + s.getSurname());
+
+            }
+        }
+
     }
 
     public static void main(String[] args) {
         //Session s = HibernateUtil.getSession();
 
-       // new Start();
+        // new Start();
+         new SplashScreen().setVisible(true);
+        
+        //Insert.insertOperator();
+    }
 
-       new SplashScreen().setVisible(true);
+    private void insertMobilePhone() {
 
-        /*
+        Session s = HibernateUtil.getSession();
+        
         MobilePhone m = new MobilePhone();
         m.setPrice(new BigDecimal(5999.99));
         m.setBuyDate(new Date());
@@ -77,10 +89,10 @@ public class Start {
         m.setWorking(true);
         m.setDescription("Mobile phone is good!");
         m.setNote("Mobile is too good");
-        
+
         s.beginTransaction();
         s.save(m);
-        s.getTransaction().commit(); */
+        s.getTransaction().commit();
     }
 
     private void readMunicipality() {

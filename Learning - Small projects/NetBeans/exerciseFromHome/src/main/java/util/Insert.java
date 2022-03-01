@@ -12,15 +12,30 @@ import java.util.Date;
 import java.util.List;
 import model.edunova.model.Course;
 import model.edunova.model.Group;
+import model.edunova.model.Operator;
 import model.edunova.model.Professor;
 import model.edunova.model.Student;
 import org.hibernate.Session;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
  * @author frank
  */
 public class Insert {
+    
+    public static void insertOperator(){
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        
+        Operator o = new Operator();
+        o.setName("Franko");
+        o.setSurname("Vekić");
+        o.setEmail("franko.vekic@gmail.com");
+        o.setPassword(BCrypt.hashpw("a", BCrypt.gensalt()));
+        session.save(o);
+        session.getTransaction().commit();
+    }
 
     public static void execute() {
 
