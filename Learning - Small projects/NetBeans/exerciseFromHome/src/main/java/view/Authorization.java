@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import controller.ProcessOperator;
@@ -12,18 +8,14 @@ import javax.swing.JOptionPane;
 import model.edunova.model.Operator;
 import util.Util;
 
-/**
- *
- * @author frank
- */
 public class Authorization extends javax.swing.JFrame {
 
     private ProcessOperator processOperator;
-    
+
     public Authorization() {
         initComponents();
         processOperator = new ProcessOperator();
-        
+
     }
 
     /**
@@ -124,27 +116,26 @@ public class Authorization extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
-        if(txtEmail.getText().trim().isEmpty()){
+        if (txtEmail.getText().trim().isEmpty()) {
             return;
         }
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtPassword.requestFocus();
     }//GEN-LAST:event_txtEmailKeyPressed
     }
-    
+
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
-        if(txtEmail.getText().trim().isEmpty()){
+        if (txtEmail.getText().trim().isEmpty()) {
             txtEmail.requestFocus();
             return;
         }
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-           authorize();
+            authorize();
     }//GEN-LAST:event_txtPasswordKeyPressed
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         authorize();
     }//GEN-LAST:event_jButton1ActionPerformed
-    
 
     /**
      * @param args the command line arguments
@@ -160,15 +151,15 @@ public class Authorization extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void authorize() {
-        if(txtEmail.getText().trim().isEmpty()){
+        if (txtEmail.getText().trim().isEmpty()) {
             txtEmail.requestFocus();
             return;
         }
-        if(txtPassword.getPassword().length==0){
+        if (txtPassword.getPassword().length == 0) {
             txtPassword.requestFocus();
             return;
         }
-        
+
         try {
             InternetAddress emailAddr = new InternetAddress(txtEmail.getText());
             emailAddr.validate();
@@ -176,18 +167,18 @@ public class Authorization extends javax.swing.JFrame {
             txtEmail.requestFocus();
             return;
         }
-        
-        Operator operator = processOperator.authorize(txtEmail.getText(),new String(txtPassword.getPassword()));
-       // System.out.println(txtEmail.getText() + " " + new String(txtPassword.getPassword()));
-       
-       if(operator == null){
-           JOptionPane.showMessageDialog(getRootPane(), "Invalid data given.");
-           return;
-       }
-       
-       Util.operator = operator;
-       
-       new Menu().setVisible(true);
-       dispose();
+
+        Operator operator = processOperator.authorize(txtEmail.getText(), new String(txtPassword.getPassword()));
+        // System.out.println(txtEmail.getText() + " " + new String(txtPassword.getPassword()));
+
+        if (operator == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "Invalid data given.");
+            return;
+        }
+
+        Util.operator = operator;
+
+        new Menu().setVisible(true);
+        dispose();
     }
 }

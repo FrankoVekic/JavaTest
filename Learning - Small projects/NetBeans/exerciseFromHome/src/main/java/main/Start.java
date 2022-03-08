@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main;
 
 import connections.Municipality;
@@ -19,7 +15,6 @@ import org.hibernate.Session;
 import util.CatchException;
 import util.HibernateUtil;
 import view.SplashScreen;
-
 
 public class Start {
 
@@ -69,15 +64,15 @@ public class Start {
         //Session s = HibernateUtil.getSession();
 
         // new Start();
-         new SplashScreen().setVisible(true);
-        
+        new SplashScreen().setVisible(true);
+
         //Insert.insertOperator();
     }
 
     private void insertMobilePhone() {
 
         Session s = HibernateUtil.getSession();
-        
+
         MobilePhone m = new MobilePhone();
         m.setPrice(new BigDecimal(5999.99));
         m.setBuyDate(new Date());

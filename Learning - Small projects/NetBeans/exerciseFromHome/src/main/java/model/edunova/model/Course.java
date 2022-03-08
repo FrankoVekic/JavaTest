@@ -3,15 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model.edunova.model;
+
 import java.math.BigDecimal;
 import javax.persistence.Entity;
+
 /**
  *
  * @author frank
  */
 @Entity
 public class Course extends model.edunova.model.Entity {
-    
+
     private String name;
     private Integer duration;
     private BigDecimal price;
@@ -48,8 +50,10 @@ public class Course extends model.edunova.model.Entity {
     public void setCertified(Boolean certified) {
         this.certified = certified;
     }
-    
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }

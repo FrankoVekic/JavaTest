@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import util.Util;
 
-/**
- *
- * @author frank
- */
 public class Menu extends javax.swing.JFrame {
 
     private SimpleDateFormat df;
@@ -24,18 +16,18 @@ public class Menu extends javax.swing.JFrame {
         df = new SimpleDateFormat("HH:mm:ss");
         Time t = new Time();
         t.start();
-        
+
     }
-    
-    private class Time extends Thread{
-        
+
+    private class Time extends Thread {
+
         @Override
-        public void run(){
+        public void run() {
             lblTime.setText(df.format(new Date()));
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                
+
             }
             run();
         }
@@ -78,6 +70,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu2.setText("Programs");
 
         jMenuItem2.setText("Courses");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setText("Professors");
@@ -113,13 +110,16 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        new CourseWindow().setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu2;
