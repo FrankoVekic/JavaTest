@@ -7,6 +7,7 @@ package util;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import model.edunova.model.Operator;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import us.codecraft.xsoup.Xsoup;
@@ -16,6 +17,17 @@ import us.codecraft.xsoup.Xsoup;
  * @author frank
  */
 public class Util {
+
+    public static Operator operator;
+    public static final String APP_TITLE = "Edunova app";
+
+    public static String getTitle(String title) {
+        if (Util.operator == null) {
+            return Util.APP_TITLE + title;
+        }
+        return Util.APP_TITLE + " " + Util.operator.getName() + " "
+                + Util.operator.getSurname() + " - " + Util.operator.getRole();
+    }
 
     public static String generateOib() {
         try {

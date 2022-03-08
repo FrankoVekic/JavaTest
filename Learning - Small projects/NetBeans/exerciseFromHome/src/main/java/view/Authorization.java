@@ -4,10 +4,13 @@
  */
 package view;
 
-import java.awt.Color;
+import controller.ProcessOperator;
 import java.awt.event.KeyEvent;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.swing.JOptionPane;
+import model.edunova.model.Operator;
+import util.Util;
 
 /**
  *
@@ -15,11 +18,12 @@ import javax.mail.internet.InternetAddress;
  */
 public class Authorization extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Authorization
-     */
+    private ProcessOperator processOperator;
+    
     public Authorization() {
         initComponents();
+        processOperator = new ProcessOperator();
+        
     }
 
     /**
@@ -38,7 +42,7 @@ public class Authorization extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtTitle = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Email");
 
@@ -116,6 +120,7 @@ public class Authorization extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
@@ -171,6 +176,18 @@ public class Authorization extends javax.swing.JFrame {
             txtEmail.requestFocus();
             return;
         }
-        System.out.println(txtEmail.getText() + " " + new String(txtPassword.getPassword()));
+        
+        Operator operator = processOperator.authorize(txtEmail.getText(),new String(txtPassword.getPassword()));
+       // System.out.println(txtEmail.getText() + " " + new String(txtPassword.getPassword()));
+       
+       if(operator == null){
+           JOptionPane.showMessageDialog(getRootPane(), "Invalid data given.");
+           return;
+       }
+       
+       Util.operator = operator;
+       
+       new Menu().setVisible(true);
+       dispose();
     }
 }

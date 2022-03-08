@@ -24,6 +24,7 @@ public class ProcessCourse extends Process<Course> {
     protected void controlCreate() throws CatchException {
         controlName();
         controlDuration();
+        
     }
 
     @Override
