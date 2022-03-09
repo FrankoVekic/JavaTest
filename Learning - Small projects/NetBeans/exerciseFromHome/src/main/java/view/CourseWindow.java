@@ -1,21 +1,27 @@
 package view;
 
 import controller.ProcessCourse;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import model.edunova.model.Course;
+import util.CatchException;
 
 public class CourseWindow extends javax.swing.JFrame {
 
-    private NumberFormat nf;
+    private DecimalFormat nf;
     private ProcessCourse process;
 
     public CourseWindow() {
         initComponents();
         process = new ProcessCourse();
-        nf = NumberFormat.getInstance(new Locale("hr", "HR"));
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("hr","HR"));
+        nf = new DecimalFormat("###,###.00");
         load();
     }
 
@@ -41,6 +47,9 @@ public class CourseWindow extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtPrice = new javax.swing.JTextField();
         chbCertified = new javax.swing.JCheckBox();
+        btnCreate = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -55,9 +64,24 @@ public class CourseWindow extends javax.swing.JFrame {
 
         jLabel2.setText("Duration");
 
+        txtDuration.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
         jLabel3.setText("Price");
 
+        txtPrice.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
         chbCertified.setText("Certified");
+
+        btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("Update");
+
+        btnDelete.setText("Delete");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,40 +89,52 @@ public class CourseWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(txtDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chbCertified))
-                .addContainerGap(139, Short.MAX_VALUE))
+                    .addComponent(chbCertified)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCreate)
+                        .addGap(13, 13, 13)
+                        .addComponent(btnUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDelete))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtPrice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                        .addComponent(txtDuration, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addGap(34, 34, 34))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(13, 13, 13)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(chbCertified)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCreate)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -115,11 +151,42 @@ public class CourseWindow extends javax.swing.JFrame {
         txtDuration.setText(c.getDuration().toString());
 
         txtPrice.setText(c.getPrice() != null ? nf.format(c.getPrice()) : "");
-        chbCertified.setSelected(c.getCertified()!=null ? c.getCertified() : false);
+        chbCertified.setSelected(c.getCertified() != null ? c.getCertified() : false);
     }//GEN-LAST:event_lstEntitiesValueChanged
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        try {
+            process.setEntity(new Course());
+            checkData();
+            process.create();
+            load();
+        } catch (CatchException ex) {
+            JOptionPane.showMessageDialog(getRootPane(), ex.getMessage());
+        }
+    }
+
+    private void checkData() {
+        var c = process.getEntity();
+        c.setName(txtName.getText());
+        try {
+            c.setDuration(Integer.parseInt(txtDuration.getText()));
+        } catch (Exception e) {
+            c.setDuration(0);
+        }
+
+        try {
+            c.setPrice(new BigDecimal(nf.parse(txtPrice.getText()).toString()));
+        } catch (Exception e) {
+            c.setPrice(BigDecimal.ZERO);
+        }
+        c.setCertified(chbCertified.isSelected());
+    }//GEN-LAST:event_btnCreateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JCheckBox chbCertified;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
