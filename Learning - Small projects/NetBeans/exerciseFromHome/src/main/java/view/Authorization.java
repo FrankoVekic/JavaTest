@@ -15,6 +15,9 @@ public class Authorization extends javax.swing.JFrame {
     public Authorization() {
         initComponents();
         processOperator = new ProcessOperator();
+        txtEmail.setText("franko.vekic@gmail.com");
+        txtPassword.setText("a");
+        setTitle(Util.getTitle(" Authorization"));
 
     }
 

@@ -7,6 +7,7 @@ package controller;
 import java.math.BigDecimal;
 import java.util.List;
 import model.edunova.model.Course;
+import model.edunova.model.Group;
 import util.CatchException;
 
 /**
@@ -17,7 +18,7 @@ public class ProcessCourse extends Process<Course> {
 
     @Override
     public List<Course> read() {
-        return session.createQuery("from Course").list();
+        return session.createQuery("from Course a order by a.name").list();
     }
 
     @Override
@@ -34,7 +35,17 @@ public class ProcessCourse extends Process<Course> {
 
     @Override
     protected void controlDelete() throws CatchException {
-
+        if(entity.getGroups()!=null && entity.getGroups().size()>0){
+            
+            StringBuilder sb = new StringBuilder();
+            sb.append("\n");
+            for(Group g:entity.getGroups()){
+                sb.append(g.getName());
+                sb.append("\n");
+            }
+            
+            throw new CatchException("This course can not be deleted because it contains a group: " + sb.toString().toUpperCase());
+        }
     }
 
     private void controlName() throws CatchException {

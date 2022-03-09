@@ -5,7 +5,9 @@
 package model.edunova.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -18,6 +20,9 @@ public class Course extends model.edunova.model.Entity {
     private Integer duration;
     private BigDecimal price;
     private Boolean certified;
+    
+    @OneToMany(mappedBy = "course")
+    private List<Group> groups;
 
     public String getName() {
         return name;
@@ -56,4 +61,14 @@ public class Course extends model.edunova.model.Entity {
         return name;
     }
 
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    
+    
 }

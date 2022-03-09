@@ -4,13 +4,15 @@ import controller.ProcessCourse;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import model.edunova.model.Course;
 import util.CatchException;
+import util.Util;
 
 public class CourseWindow extends javax.swing.JFrame {
 
@@ -20,14 +22,24 @@ public class CourseWindow extends javax.swing.JFrame {
     public CourseWindow() {
         initComponents();
         process = new ProcessCourse();
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("hr","HR"));
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("hr", "HR"));
         nf = new DecimalFormat("###,###.00");
+        setTitle(Util.getTitle(" Courses"));
         load();
     }
 
     private void load() {
         DefaultListModel<Course> m = new DefaultListModel<>();
         List<Course> entities = process.read();
+        
+     //   Collections.sort(entities,new Comparator<Course>() {
+     //       //sortiranje naziva po abecedi u Javi
+     //       @Override
+     //       public int compare(Course o1, Course o2) {
+     //          return o1.getName().compareTo(o2.getName());
+     //       }
+     //   });
+        
         for (Course c : entities) {
             m.addElement(c);
         }
@@ -80,8 +92,18 @@ public class CourseWindow extends javax.swing.JFrame {
         });
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -181,6 +203,43 @@ public class CourseWindow extends javax.swing.JFrame {
         }
         c.setCertified(chbCertified.isSelected());
     }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if (process.getEntity() == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "You must select a course to change.");
+            return;
+        }
+
+        checkData();
+        try {
+            process.update();
+            load();
+        } catch (CatchException ex) {
+            JOptionPane.showMessageDialog(getRootPane(), ex.getMessage());
+        }
+
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if(process.getEntity()==null){
+            JOptionPane.showMessageDialog(getRootPane(), "You have to select a course first.");
+            return;
+        }
+        
+        if(JOptionPane.showConfirmDialog(getRootPane(), 
+                "Are you sure you want to delete \"" + process.getEntity().getName() + "\"?", "Delete", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE)==JOptionPane.NO_OPTION){
+            return;
+        }
+        
+        try {
+            process.delete();
+            load();
+        } catch (CatchException ex) {
+            JOptionPane.showMessageDialog(getRootPane(), ex.getMessage());
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

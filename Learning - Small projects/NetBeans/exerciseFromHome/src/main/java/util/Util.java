@@ -25,7 +25,7 @@ public class Util {
         if (Util.operator == null) {
             return Util.APP_TITLE + title;
         }
-        return Util.APP_TITLE + " " + Util.operator.getName() + " "
+        return Util.APP_TITLE + " " + title + " " + Util.operator.getName() + " "
                 + Util.operator.getSurname() + " - " + Util.operator.getRole();
     }
 
