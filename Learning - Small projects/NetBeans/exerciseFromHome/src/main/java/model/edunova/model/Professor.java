@@ -21,6 +21,4 @@ public class Professor extends Person {
         this.iban = iban;
     }
     
-    
-    
 }
