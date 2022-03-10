@@ -175,6 +175,7 @@ public class ProfessorWindow extends javax.swing.JFrame {
         if (evt.getValueIsAdjusting() || lstEntities.getSelectedValue() == null) {
             return;
         }
+        
         process.setEntity(lstEntities.getSelectedValue());
         var e = process.getEntity();
         txtName.setText(e.getName());
@@ -183,6 +184,12 @@ public class ProfessorWindow extends javax.swing.JFrame {
         txtOib.setText(e.getOib());
         txtIban.setText(e.getIban());
             
+        if(e.getGroups()!=null && e.getGroups().size()>0){
+            btnDelete.setEnabled(false);
+        }
+        else {
+            btnDelete.setEnabled(true);
+        }
     }//GEN-LAST:event_lstEntitiesValueChanged
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed

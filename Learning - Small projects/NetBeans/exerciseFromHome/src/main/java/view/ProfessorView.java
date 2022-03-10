@@ -9,15 +9,12 @@ import model.edunova.model.Professor;
 
 public class ProfessorView extends JLabel implements ListCellRenderer<Professor> {
 
-    
-    public ProfessorView(){
+    public ProfessorView() {
         setOpaque(true);
     }
-    
+
     @Override
     public Component getListCellRendererComponent(JList<? extends Professor> list, Professor value, int index, boolean isSelected, boolean cellHasFocus) {
-
-        setText(value.getName() + " " + value.getSurname());
 
         if (isSelected) {
             setBackground(Color.BLUE);
@@ -26,6 +23,9 @@ public class ProfessorView extends JLabel implements ListCellRenderer<Professor>
             setBackground(Color.WHITE);
             setForeground(Color.BLACK);
         }
+
+        setText((value.getName() == null ? "Unknown" : value.getName()) + " "
+                + (value.getSurname() == null ? "Unknown" : value.getSurname()));
 
         return this;
 

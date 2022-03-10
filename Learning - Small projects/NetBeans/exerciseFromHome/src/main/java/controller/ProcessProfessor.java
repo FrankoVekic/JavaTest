@@ -42,4 +42,14 @@ public class ProcessProfessor extends ProcessPerson<Professor> {
 
     }
 
+    @Override
+    protected void controlDelete() throws CatchException {
+       if(entity.getGroups()!=null && entity.getGroups().size()>0){
+           throw new CatchException(entity.getName() + " " + entity.getSurname() + " can't be deleted because" + entity.getName()+ " is in a group.");
+           
+       }
+    }
+
+    
+    
 }
