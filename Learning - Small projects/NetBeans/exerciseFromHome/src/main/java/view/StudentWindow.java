@@ -16,7 +16,7 @@ public class StudentWindow extends javax.swing.JFrame {
     public StudentWindow() {
         initComponents();
         process = new ProcessStudent();
-        lstEntities.setCellRenderer(new StudentView());
+        lstEntities.setCellRenderer(new PersonView());
         setTitle(Util.getTitle(" Students"));
         load();
     }

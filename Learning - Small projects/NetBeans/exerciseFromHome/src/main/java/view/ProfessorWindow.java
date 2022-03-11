@@ -20,7 +20,7 @@ public class ProfessorWindow extends javax.swing.JFrame {
     public ProfessorWindow() {
         initComponents();
         process = new ProcessProfessor();
-        lstEntities.setCellRenderer(new ProfessorView());
+        lstEntities.setCellRenderer(new PersonView());
         setTitle(Util.getTitle(" Professors"));
         load();
     }
