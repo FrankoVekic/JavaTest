@@ -5,9 +5,9 @@ import java.util.Date;
 import util.Util;
 
 public class Menu extends javax.swing.JFrame {
-
+    
     private SimpleDateFormat df;
-
+    
     public Menu() {
         initComponents();
         setTitle(Util.getTitle("Menu"));
@@ -16,23 +16,23 @@ public class Menu extends javax.swing.JFrame {
         df = new SimpleDateFormat("HH:mm:ss");
         Time t = new Time();
         t.start();
-
+        
     }
-
+    
     private class Time extends Thread {
-
+        
         @Override
         public void run() {
             lblTime.setText(df.format(new Date()));
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-
+                
             }
             run();
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -86,6 +86,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Students");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuItem5.setText("Groups");
@@ -125,6 +130,10 @@ public class Menu extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         new ProfessorWindow().setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        new StudentWindow().setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
