@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"connections"},{"l":"controller"},{"l":"inheritance"},{"l":"main"},{"l":"model.edunova.exercise1"},{"l":"model.edunova.model"},{"l":"model.primary"},{"l":"util"},{"l":"view"}];updateSearchResults();

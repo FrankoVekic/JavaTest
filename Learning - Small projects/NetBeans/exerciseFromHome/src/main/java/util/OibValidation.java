@@ -4,10 +4,6 @@
  */
 package util;
 
-/**
- *
- * @author frank
- */
 public class OibValidation {
 	
 	public static final int NO_ERROR = 0;
@@ -17,6 +13,12 @@ public class OibValidation {
 	
 	private static final int asciiDigitsOffset = '0';	
 
+        
+        /**
+         * Checking OIB
+         * @param oib which i am checking
+         * @return true if the OIB is valid, false if it isn't
+         */
 	public static boolean checkOIB(String oib) {
 		return checkOIBState(oib) == NO_ERROR;
 	}

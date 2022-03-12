@@ -25,7 +25,7 @@ public class Person extends model.edunova.model.Entity {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name==null ? name : name.trim();
     }
 
     public String getSurname() {
@@ -33,7 +33,7 @@ public class Person extends model.edunova.model.Entity {
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        this.surname = surname==null ? surname : surname.trim();
     }
 
     public String getOib() {

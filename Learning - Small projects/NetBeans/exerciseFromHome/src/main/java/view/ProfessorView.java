@@ -7,6 +7,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import model.edunova.model.Professor;
 
+@Deprecated(since = "PersonView")
 public class ProfessorView extends JLabel implements ListCellRenderer<Professor> {
 
     public ProfessorView() {

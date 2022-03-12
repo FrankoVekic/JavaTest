@@ -14,6 +14,7 @@ import model.primary.MobilePhone;
 import org.hibernate.Session;
 import util.CatchException;
 import util.HibernateUtil;
+import util.Insert;
 import view.SplashScreen;
 
 public class Start {

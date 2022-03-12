@@ -2,14 +2,14 @@ package model.edunova.model;
 
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Student extends Person {
 
     private String contractCount;
 
-    @OneToMany(mappedBy = "professor")
+    @ManyToMany(mappedBy = "students")
     private List<Group> groups;
 
     public List<Group> getGroups() {

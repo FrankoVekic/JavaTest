@@ -14,6 +14,11 @@ public class Util {
     public static Operator operator;
     public static final String APP_TITLE = "Edunova app";
 
+    /**
+     * String title of the app which is made of the app title, program which user is using and operator name
+     * @param title This is the current title for this program
+     * @return It returns a full name which is shown in the titlebar.
+     */
     public static String getTitle(String title) {
         if (Util.operator == null) {
             return Util.APP_TITLE + title;
