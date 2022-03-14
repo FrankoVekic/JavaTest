@@ -67,6 +67,10 @@ public class Group extends model.edunova.model.Entity {
     public void setStudents(List<Student> students) {
         this.students = students;
     }
+
+    public Object getGroups() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
 }

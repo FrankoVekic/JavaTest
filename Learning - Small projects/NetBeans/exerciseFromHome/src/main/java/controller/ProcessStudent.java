@@ -10,6 +10,23 @@ public class ProcessStudent extends ProcessPerson<Student> {
     public List<Student> read() {
         return session.createQuery("from Student").list();
     }
+    
+    public List<Student> read(String search) {
+        return session.createQuery("from Student s "
+                + "where concat(s.name,' ', s.surname, ' ',ifnull(s.oib,''))"
+                + "like :search order by s.surname, s.name")
+                .setParameter("search", "%" + search + "%")
+                .setMaxResults(50).list();
+    }
+    
+    public List<Student> readBeginSurname(String search) {
+        return session.createQuery("from Student s "
+                + "where s.surname "
+                + "like :search order by s.surname, s.name")
+                .setParameter("search", "%" + search + "%")
+                .setMaxResults(50)
+                .list();
+    }
 
     @Override
     protected void controlCreate() throws CatchException {

@@ -67,7 +67,7 @@ public class Start {
         // new Start();
         new SplashScreen().setVisible(true);
 
-        //Insert.insertOperator();
+        //Insert.insertStudentsWithoutOIB();
     }
 
     private void insertMobilePhone() {

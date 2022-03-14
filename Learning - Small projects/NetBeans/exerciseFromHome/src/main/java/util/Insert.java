@@ -37,13 +37,21 @@ public class Insert {
         session.getTransaction().commit();
     }
 
+    public static void insertStudentsWithoutOIB(){
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        Faker faker = new Faker();
+        List<Student> students = generateStudents(faker, session,false);
+        session.getTransaction().commit();
+    }
+    
     public static void execute() {
 
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
         Faker faker = new Faker();
 
-        List<Student> students = generateStudents(faker, session);
+        List<Student> students = generateStudents(faker, session,true);
         List<Professor> professors = generateProfessors(faker, session);
         List<Course> courses = generateCourses(faker, session);
 
@@ -71,7 +79,7 @@ public class Insert {
         session.getTransaction().commit();
     }
 
-    private static List<Student> generateStudents(Faker faker, Session session) {
+    private static List<Student> generateStudents(Faker faker, Session session, boolean generateOIB) {
 
         List<Student> students = new ArrayList();
         Student s;
@@ -82,7 +90,9 @@ public class Insert {
             s.setEmail(faker.name().firstName().substring(0, 1).toLowerCase()
                     + faker.name().lastName().toLowerCase().replace(" ", "")
                     + "@gmail.com");
-            s.setOib(Util.generateOib());
+            if(generateOIB){
+                s.setOib(Util.generateOib());
+            }
             s.setContractCount((i + 1) + "/2022");
             session.save(s);
             students.add(s);
