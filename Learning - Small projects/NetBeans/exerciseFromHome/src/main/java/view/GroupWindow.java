@@ -2,12 +2,14 @@ package view;
 
 import controller.ProcessCourse;
 import controller.ProcessGroup;
+import controller.ProcessProfessor;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import model.edunova.model.Course;
 import model.edunova.model.Group;
+import model.edunova.model.Professor;
 import util.CatchException;
 import util.Util;
 
@@ -20,7 +22,23 @@ public class GroupWindow extends javax.swing.JFrame {
         process = new ProcessGroup();
         setTitle(Util.getTitle(" Groups"));
         load();
+        loadCourses();
+        loadProfessors();
         
+    }
+    
+    private void loadProfessors(){
+         DefaultComboBoxModel<Professor> ms = new DefaultComboBoxModel<>();
+        Professor professor = new Professor();
+        professor.setId(Long.valueOf(0));
+        professor.setName("Not");
+        professor.setSurname("chosen");
+        ms.addElement(professor);
+        new ProcessProfessor().read().forEach(s->{ms.addElement(s);});
+        cmbProfessors.setModel(ms);
+    }
+    
+    private void loadCourses(){
         DefaultComboBoxModel<Course> ms = new DefaultComboBoxModel<>();
         Course course = new Course();
         course.setId(Long.valueOf(0));
@@ -52,6 +70,9 @@ public class GroupWindow extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         cmbCourses = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        cmbProfessors = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -85,6 +106,10 @@ public class GroupWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Course");
+
+        jLabel3.setText("Professor");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,7 +128,10 @@ public class GroupWindow extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addComponent(btnUpdate)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnDelete))))
+                            .addComponent(btnDelete))
+                        .addComponent(cmbProfessors, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jLabel2))
                 .addContainerGap(621, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -116,9 +144,15 @@ public class GroupWindow extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbCourses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbProfessors, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCreate)
                             .addComponent(btnUpdate)
@@ -204,7 +238,10 @@ public class GroupWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<Course> cmbCourses;
+    private javax.swing.JComboBox<Professor> cmbProfessors;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<Group> lstEntities;
     private javax.swing.JTextField txtName;
