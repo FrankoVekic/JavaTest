@@ -21,7 +21,7 @@ public class ProcessGroup extends Process<Group> {
 
     @Override
     protected void controlCreate() throws CatchException {
-      
+        controlCourse();
     }
 
     @Override
@@ -32,6 +32,12 @@ public class ProcessGroup extends Process<Group> {
     @Override
     protected void controlDelete() throws CatchException {
        
+    }
+
+    private void controlCourse() throws CatchException {
+      if(entity.getCourse()==null || entity.getCourse().getId().equals(Long.valueOf(0))){
+          throw new CatchException("You must choose a course.");
+      }
     }
     
     

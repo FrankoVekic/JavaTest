@@ -71,6 +71,12 @@ public class Group extends model.edunova.model.Entity {
     public Object getGroups() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    public String toString() {
+       return name;
+    }
+
+
     
 }
