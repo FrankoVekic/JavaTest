@@ -1,9 +1,12 @@
 package view;
 
+import com.github.lgooddatepicker.components.DatePickerSettings;
 import controller.ProcessCourse;
 import controller.ProcessGroup;
 import controller.ProcessProfessor;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -24,6 +27,12 @@ public class GroupWindow extends javax.swing.JFrame {
         load();
         loadCourses();
         loadProfessors();
+        DatePickerSettings dps = new DatePickerSettings();
+       // DatePickerSettings dps = new DatePickerSettings(new Locale("hr","HR"));
+        dps.setFormatForDatesCommonEra("dd.MM.yyyy");
+       // dps.setTranslationClear("Očisti");
+       // dps.setTranslationToday("Danas");
+        dpBeginningDate.setSettings(dps);
         
     }
     
@@ -73,6 +82,8 @@ public class GroupWindow extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cmbProfessors = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
+        dpBeginningDate = new com.github.lgooddatepicker.components.DatePicker();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -110,6 +121,8 @@ public class GroupWindow extends javax.swing.JFrame {
 
         jLabel3.setText("Professor");
 
+        jLabel4.setText("Beginning date");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,7 +144,9 @@ public class GroupWindow extends javax.swing.JFrame {
                             .addComponent(btnDelete))
                         .addComponent(cmbProfessors, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(dpBeginningDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addContainerGap(621, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -152,7 +167,11 @@ public class GroupWindow extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbProfessors, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dpBeginningDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCreate)
                             .addComponent(btnUpdate)
@@ -173,7 +192,24 @@ public class GroupWindow extends javax.swing.JFrame {
         process.setEntity(lstEntities.getSelectedValue());
         var e = process.getEntity();
         txtName.setText(e.getName());
-            
+        if(e.getCourse()==null){
+            cmbCourses.setSelectedIndex(0);
+        }else {
+            cmbCourses.setSelectedItem(e.getCourse());
+        }
+        cmbCourses.setSelectedItem(e.getCourse());
+         
+        if(e.getProfessor()==null){
+            cmbProfessors.setSelectedIndex(0);
+        }else {
+            cmbProfessors.setSelectedItem(e.getProfessor());
+        }
+        
+        if(e.getBeginningDate()!=null){
+            dpBeginningDate.setDate(e.getBeginningDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        }else {
+            dpBeginningDate.setDate(null);
+        }
         
     }//GEN-LAST:event_lstEntitiesValueChanged
 
@@ -239,9 +275,11 @@ public class GroupWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<Course> cmbCourses;
     private javax.swing.JComboBox<Professor> cmbProfessors;
+    private com.github.lgooddatepicker.components.DatePicker dpBeginningDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<Group> lstEntities;
     private javax.swing.JTextField txtName;

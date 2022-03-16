@@ -4,6 +4,7 @@
  */
 package controller;
 
+import java.util.Calendar;
 import java.util.List;
 import model.edunova.model.Group;
 import util.CatchException;
@@ -22,6 +23,7 @@ public class ProcessGroup extends Process<Group> {
     @Override
     protected void controlCreate() throws CatchException {
         controlCourse();
+        controlBeginningDate();
     }
 
     @Override
@@ -38,6 +40,19 @@ public class ProcessGroup extends Process<Group> {
       if(entity.getCourse()==null || entity.getCourse().getId().equals(Long.valueOf(0))){
           throw new CatchException("You must choose a course.");
       }
+    }
+
+    private void controlBeginningDate() throws CatchException {
+       if(entity.getBeginningDate()!=null){
+           Calendar c1 = Calendar.getInstance();
+           c1.setTime(entity.getBeginningDate());
+           if(c1.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || 
+                   c1.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
+               throw new CatchException("Beginning date can not be on weekend.");
+               
+           }
+           
+       }
     }
     
     
