@@ -32,6 +32,7 @@ public class Insert {
         o.setName("Franko");
         o.setSurname("Vekić");
         o.setEmail("franko.vekic@gmail.com");
+        o.setRole("oper");
         o.setPassword(BCrypt.hashpw("a", BCrypt.gensalt()));
         session.save(o);
         session.getTransaction().commit();
@@ -66,7 +67,6 @@ public class Insert {
                 g.setCourse(c);
                 g.setProfessor(professors.get((int) Math.random() * (professors.size() - 1)));
                 g.setBeginningDate(new Date());
-
                 Collections.shuffle(students);
                 g.setStudents(new ArrayList<>());
                 for (int k = 0; k < ((int) Math.random() * (20 - 10) + 10); k++) {

@@ -8,10 +8,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import model.edunova.model.Group;
+import model.edunova.model.Operator;
 import model.edunova.model.Professor;
 import model.edunova.model.Student;
 import model.primary.MobilePhone;
 import org.hibernate.Session;
+import org.mindrot.jbcrypt.BCrypt;
 import util.CatchException;
 import util.HibernateUtil;
 import util.Insert;
@@ -27,9 +29,11 @@ public class Start {
         //example1();
         // readMunicipality();
         //testingInsertProfessor();
+       // Insert.insertOperator();
 
     }
 
+    
     private void exerciseInsertProfessor() {
         Professor professor = new Professor();
         professor.setOib("59710206893");
@@ -64,7 +68,7 @@ public class Start {
     public static void main(String[] args) {
         //Session s = HibernateUtil.getSession();
 
-        // new Start();
+         //new Start();
         new SplashScreen().setVisible(true);
 
         //Insert.insertStudentsWithoutOIB();

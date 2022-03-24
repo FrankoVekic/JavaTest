@@ -28,12 +28,14 @@ public class ProcessGroup extends Process<Group> {
 
     @Override
     protected void controlUpdate() throws CatchException {
-      
+      controlCreate();
     }
 
     @Override
     protected void controlDelete() throws CatchException {
-       
+       if(entity.getStudents()!=null && !entity.getStudents().isEmpty()){
+           throw new CatchException("You can not delete a group while there are active students in it");
+       }
     }
 
     private void controlCourse() throws CatchException {
