@@ -1,11 +1,19 @@
 package view;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import controller.ProcessCourse;
 import controller.ProcessGroup;
 import controller.ProcessProfessor;
 import controller.ProcessStudent;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import model.edunova.model.Course;
 import model.edunova.model.Group;
@@ -112,6 +121,7 @@ public class GroupWindow extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         lstStudentsInGroup = new javax.swing.JList<>();
         jLabel5 = new javax.swing.JLabel();
+        btnExportJson = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         btnUpdate = new javax.swing.JButton();
         dpBeginningDate = new com.github.lgooddatepicker.components.DatePicker();
@@ -187,6 +197,13 @@ public class GroupWindow extends javax.swing.JFrame {
 
         jLabel5.setText("Students in Group");
 
+        btnExportJson.setText("Export JSON");
+        btnExportJson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportJsonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -194,12 +211,14 @@ public class GroupWindow extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(99, 99, 99))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(99, 99, 99))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap()))
+                    .addComponent(btnExportJson)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,8 +226,9 @@ public class GroupWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnExportJson))
         );
 
         btnUpdate.setText("Update");
@@ -312,6 +332,11 @@ public class GroupWindow extends javax.swing.JFrame {
         );
 
         btnRemoveStudent.setText(">>");
+        btnRemoveStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveStudentActionPerformed(evt);
+            }
+        });
 
         btnAddStudent.setText("<<");
         btnAddStudent.addActionListener(new java.awt.event.ActionListener() {
@@ -497,6 +522,67 @@ public class GroupWindow extends javax.swing.JFrame {
         lstStudentsInGroup.repaint();
     }//GEN-LAST:event_btnAddStudentActionPerformed
 
+    private void btnRemoveStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveStudentActionPerformed
+        DefaultListModel<Student> s = (DefaultListModel<Student>)lstStudentsInGroup.getModel();
+        for(Student p : lstStudentsInGroup.getSelectedValuesList()){
+            s.removeElement(p);
+            for(Student mp : process.getEntity().getStudents()){
+                if(mp.getId().equals(p.getId())){
+                    process.getEntity().getStudents().remove(mp);
+                    break;
+                }
+            }
+            process.getEntity().getStudents().removeAll(lstStudentsInGroup.getSelectedValuesList());
+            
+        }
+        lstStudentsInGroup.repaint();
+    }//GEN-LAST:event_btnRemoveStudentActionPerformed
+
+    private void btnExportJsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportJsonActionPerformed
+        ExclusionStrategy strategy = new ExclusionStrategy(){
+            @Override
+            public boolean shouldSkipField(FieldAttributes fa) {
+               if(fa.getDeclaringClass()==Course.class && fa.getName().equals("groups")){
+                   return true;
+               }
+               if(fa.getDeclaringClass()==Professor.class && fa.getName().equals("groups")){
+                   return true;
+               }
+               if(fa.getDeclaringClass()==Student.class && fa.getName().equals("groups")){
+                   return true;
+               }
+               return false;
+            }
+
+            @Override
+            public boolean shouldSkipClass(Class<?> type) {
+               return false;
+            }
+            
+        };
+        
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies(strategy)
+                .setPrettyPrinting()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+                .create();
+        
+        
+        JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File(System.getProperty("user.home")));
+        jfc.setSelectedFile(new File(System.getProperty("user.home") +
+                File.separator + "groups.json"));
+        if(jfc.showSaveDialog(this)==JFileChooser.APPROVE_OPTION){
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(jfc.getSelectedFile(), StandardCharsets.UTF_8));
+                
+                writer.write(gson.toJson(process.read()));
+                writer.close();
+            } catch (Exception e) {
+            }
+        }
+    }//GEN-LAST:event_btnExportJsonActionPerformed
+
     private boolean studentExistsInGroup(DefaultListModel<Student> m, Student p) {
         for(int i=0;i<m.size();i++){
             if(m.get(i).getId().equals(p.getId())){
@@ -510,6 +596,7 @@ public class GroupWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnAddStudent;
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnExportJson;
     private javax.swing.JButton btnRemoveStudent;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
@@ -536,6 +623,5 @@ public class GroupWindow extends javax.swing.JFrame {
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
-
 
 }
