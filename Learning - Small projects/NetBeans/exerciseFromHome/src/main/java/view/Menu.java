@@ -1,7 +1,16 @@
 package view;
 
+import controller.ProcessGroup;
+import java.awt.BorderLayout;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import model.edunova.model.Group;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 import util.Util;
 
 public class Menu extends javax.swing.JFrame {
@@ -16,7 +25,29 @@ public class Menu extends javax.swing.JFrame {
         df = new SimpleDateFormat("HH:mm:ss");
         Time t = new Time();
         t.start();
+        defineGraph();
         
+    }
+    
+    private void defineGraph(){
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        List<Group> groups = new ProcessGroup().read();
+        
+        Collections.sort(groups, new GroupComparator());
+        
+        
+        
+        for(Group g : new ProcessGroup().read()){
+            var number = g.getStudents()==null ? 0 : g.getStudents().size();
+           dataset.setValue(g.getName() + " (" +  number + ")", number);
+        }
+        JFreeChart jFreeChart = ChartFactory.createPieChart("Number of students per group", dataset);
+        
+        ChartPanel chartPanel = new ChartPanel(jFreeChart);
+        
+        pnlGraph.setLayout(new BorderLayout());
+        pnlGraph.add(chartPanel, BorderLayout.CENTER);
+        pnlGraph.validate();
     }
     
     private class Time extends Thread {
@@ -39,6 +70,7 @@ public class Menu extends javax.swing.JFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         lblTime = new javax.swing.JLabel();
+        pnlGraph = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmApp = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -55,6 +87,17 @@ public class Menu extends javax.swing.JFrame {
 
         lblTime.setText("jLabel1");
         jToolBar1.add(lblTime);
+
+        javax.swing.GroupLayout pnlGraphLayout = new javax.swing.GroupLayout(pnlGraph);
+        pnlGraph.setLayout(pnlGraphLayout);
+        pnlGraphLayout.setHorizontalGroup(
+            pnlGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pnlGraphLayout.setVerticalGroup(
+            pnlGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 235, Short.MAX_VALUE)
+        );
 
         jmApp.setText("File");
 
@@ -116,11 +159,17 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 300, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 255, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(pnlGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -164,5 +213,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jmApp;
     private javax.swing.JMenu jmiOper;
     private javax.swing.JLabel lblTime;
+    private javax.swing.JPanel pnlGraph;
     // End of variables declaration//GEN-END:variables
 }
