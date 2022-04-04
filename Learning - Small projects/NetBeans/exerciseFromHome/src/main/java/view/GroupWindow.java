@@ -122,6 +122,7 @@ public class GroupWindow extends javax.swing.JFrame {
         lstStudentsInGroup = new javax.swing.JList<>();
         jLabel5 = new javax.swing.JLabel();
         btnExportJson = new javax.swing.JButton();
+        btnSendEmail = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         btnUpdate = new javax.swing.JButton();
         dpBeginningDate = new com.github.lgooddatepicker.components.DatePicker();
@@ -204,6 +205,13 @@ public class GroupWindow extends javax.swing.JFrame {
             }
         });
 
+        btnSendEmail.setText("Send Email");
+        btnSendEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendEmailActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -211,14 +219,20 @@ public class GroupWindow extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(99, 99, 99))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap()))
-                    .addComponent(btnExportJson)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(99, 99, 99))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnExportJson)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSendEmail)
+                        .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,8 +241,10 @@ public class GroupWindow extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnExportJson))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnExportJson)
+                    .addComponent(btnSendEmail)))
         );
 
         btnUpdate.setText("Update");
@@ -513,6 +529,10 @@ public class GroupWindow extends javax.swing.JFrame {
             lstStudentsInGroup.setModel(m);
         }
         
+        if(process.getEntity().getStudents()==null){
+            process.getEntity().setStudents(new ArrayList<>());
+        }
+        
         for(Student p : lstStudentsInSchool.getSelectedValuesList()){
             if(!studentExistsInGroup(m, p)){
                 process.getEntity().getStudents().add(p);
@@ -583,6 +603,10 @@ public class GroupWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExportJsonActionPerformed
 
+    private void btnSendEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendEmailActionPerformed
+        new GroupSendEmail(process.getEntity().getStudents()).setVisible(true);
+    }//GEN-LAST:event_btnSendEmailActionPerformed
+
     private boolean studentExistsInGroup(DefaultListModel<Student> m, Student p) {
         for(int i=0;i<m.size();i++){
             if(m.get(i).getId().equals(p.getId())){
@@ -599,6 +623,7 @@ public class GroupWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnExportJson;
     private javax.swing.JButton btnRemoveStudent;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnSendEmail;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JCheckBox chbSurname;
     private javax.swing.JComboBox<Course> cmbCourses;
